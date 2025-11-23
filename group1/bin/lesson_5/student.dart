@@ -1,44 +1,30 @@
-//1 task
-class Student {
-  String _name;
-  int _grade;
-  double _averageScore;
+import 'person.dart';
+//3 задание
+class Student extends Person {
+  Map<Subject, double> marks;
 
-  Student(this._name, this._grade) : _averageScore = 0;
-  Student.withScore(this._name, this._grade, this._averageScore);
+  Student(String fullName, int age, bool isMarried, this.marks)
+    : super(fullName, age, isMarried);
 
-  String get name => _name;
-  int get grade => _grade;
-  double get averageScore => _averageScore;
+  void showMarks() {
+    print('Student: $fullName');
 
-  set averageScore(double value) {
-    if (value < 0 || value > 100) {
-      print('Error: the average score must be between 0 and 100');
-    } else {
-      _averageScore = value;
+    for (var entry in marks.entries) {
+      print('${entry.key.name}: ${entry.value}');
     }
   }
 
-  void displayInfo() {
-    print('Name: $_name, Grade: $_grade, Average Score: $_averageScore');
-  }
-}
+  double calculateAverage() {
+    double sum = 0;
 
-//2 task
-class Course {
-  String title;
-  List<Student> students = [];
-  Course(this.title);
-  void addStudents(Student s) {
-    students.add(s);
-  }
-
-  void showStudents() {
-    print('Course: $title');
-    print('Enrolled students:');
-
-    for (var i = 0; i < students.length; i++) {
-      print('${i + 1}. ${students[i].name}');
+    for (var entry in marks.entries) {
+      sum += entry.value;
     }
+    return sum / marks.length;
+  }
+  @override
+  void introduce(){
+    super.introduce();
+    print('Average mark: ${calculateAverage()}');
   }
 }
